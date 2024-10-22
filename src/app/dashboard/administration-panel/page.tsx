@@ -1,5 +1,13 @@
+import { AdminstrationPanel } from "@/components/layouts";
+import { Header,Footer } from "@/components/organisms";
+import { Vacancy } from "@/components/templates";
+
 export default function AdministrationPanelView(){
     return(
-        <div>Administration panel</div>
+        <AdminstrationPanel
+        header={<Header />}
+        main={<Vacancy />}
+        footer={<Footer />}
+        />
     )
 }
