@@ -8,12 +8,11 @@ interface ICardProps{
     description: string,
     state:string,
     company:string,
-    key:number
 }
 
-export default function Card({title,description,state,company, key}:ICardProps):React.ReactElement{
+export default function Card({title,description,state,company}:ICardProps):React.ReactElement{
     return(
-        <div className="content-card" key={key}>
+        <div className="content-card">
             <div className="card-header">
                 <h3 className="header-title">{title}</h3>
             </div>

@@ -1,8 +1,23 @@
-header{
 
+.administration-panel{
+    border-radius: var(--border-radius-medium);
+    background-color: var(--background-white);
+    height: 98vh;
+    width: 80%;
+    padding: var(--padding-large);
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-large);
+
+    header{
+        display: flex;
+        flex-direction: column;
+        gap: var(--padding-large);
+    }
+
+    footer{
+        display: flex;
+        justify-content: center;
+    }
 }
 
-main{
-    width: 90%;
-    margin: 0 auto;
-}

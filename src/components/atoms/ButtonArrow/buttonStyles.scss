@@ -1,0 +1,14 @@
+.icon{
+    padding: var(--padding-small);
+    background-color: var(--border-color-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--border-radius-large);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.icon:hover{
+    background-color: var(--color-gray-light);
+}

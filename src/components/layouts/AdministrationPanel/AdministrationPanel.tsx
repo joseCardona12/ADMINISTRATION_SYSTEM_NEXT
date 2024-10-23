@@ -8,7 +8,7 @@ interface IAdministrationPanelProps{
 
 export default function AdminstrationPanel({header,main,footer}:IAdministrationPanelProps): React.ReactElement{
     return(
-        <>
+        <div className="administration-panel">
         <header>
             {header}
         </header>
@@ -18,6 +18,6 @@ export default function AdminstrationPanel({header,main,footer}:IAdministrationP
         <footer>
             {footer}
         </footer>
-        </>
+        </div>
     )
 }

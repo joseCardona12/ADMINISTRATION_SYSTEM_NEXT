@@ -1,0 +1,33 @@
+.content-modal{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-color-transparent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .modal{
+        width: 40%;
+        padding: var(--padding-large);
+        border-radius: var(--border-radius-small);
+        background-color: var(--background-white);
+        display: flex;
+        flex-direction: column;
+        gap: var(--padding-large);
+
+        .modal-title{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-inputs{
+            display: flex;
+            flex-direction: column;
+            gap: var(--padding-medium)
+        }
+    }
+
+}

@@ -1,11 +1,15 @@
 import "./buttonStyles.scss"
 interface IButtonIconProps{
     icon:React.ReactElement,
-    colorIcon?:string
+    colorIcon?:string,
+    onClick?:()=>void
 }
-export default function ButtonIcon({icon, colorIcon}:IButtonIconProps):React.ReactElement{
+export default function ButtonIcon({icon, colorIcon,onClick}:IButtonIconProps):React.ReactElement{
     return(
-        <div className="content-icon" style={{color:colorIcon}}>
+        <div 
+        className="content-icon" 
+        style={{color:colorIcon}} 
+        onClick={onClick}>
             {icon}
         </div>
     )

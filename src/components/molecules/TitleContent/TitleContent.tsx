@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@/components/atoms";
 import { IconsPlus } from "@/assets/icons";
-import "./titleContentStyles.scss"
+import "./titleContentStyles.scss";
+import { useOpenModal } from "@/global-state";
 
 interface ITitleContentProps{
     title:string,
@@ -9,6 +10,12 @@ interface ITitleContentProps{
 }
 
 export default function TitleContent({title,backgroundColor}:ITitleContentProps):React.ReactNode{
+
+    const {isOpen,setIsOpen} = useOpenModal((state)=>state);
+
+    const handleClickCreate = ():void =>{
+        setIsOpen(true);
+    }
     return(
         <div className="content-title">
             <h2>{title}</h2>
@@ -19,7 +26,7 @@ export default function TitleContent({title,backgroundColor}:ITitleContentProps)
             borderRadius="var(--border-radius-large)"
             color="var(--color-white)"
             padding="var(--padding-small) var(--padding-medium)"
-            onClick={()=>{}}
+            onClick={handleClickCreate}
             />
         </div>
     )

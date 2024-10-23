@@ -1,0 +1,12 @@
+.content-textarea{
+    display: flex;
+    flex-direction: column;
+    gap: var(--padding-small);
+
+    textarea{
+        border-radius: var(--border-radius-small);
+        border: 1px solid var(--border-color-gray);
+        outline: none;
+        padding: var(--padding-small);
+    }
+}
