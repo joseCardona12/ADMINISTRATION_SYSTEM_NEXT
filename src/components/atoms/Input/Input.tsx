@@ -1,16 +1,30 @@
+"use client";
 import "./inputStyles.scss";
+import styled from "styled-components";
+
+const StyledInput = styled.input
+`
+    border: 1px solid var(--border-color-gray);
+    padding: var(--padding-small);
+    border-radius: var(--border-radius-small);
+    &:focus{
+        border-color:"red";
+    }
+
+`;
 interface IInputProps{
     label:string
     name:string,
     type: "text" | "email" | "password",
     value:string,
     onChange: (e:React.ChangeEvent<HTMLInputElement>) =>void,
+    borderFocus?: string,
 }
-export default function Input({label,name,type,value,onChange}:IInputProps):React.ReactNode{
+export default function Input({label,name,type,value,onChange, borderFocus}:IInputProps):React.ReactNode{
     return(
         <div className="content-input">
             <label htmlFor={name}>{label}</label>
-            <input 
+            <StyledInput 
             type={type} 
             name={name}
             value={value}

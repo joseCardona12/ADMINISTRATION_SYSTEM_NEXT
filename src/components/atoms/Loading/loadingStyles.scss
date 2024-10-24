@@ -1,10 +1,11 @@
 .content-loading{
     background-color: red;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     background-color: var(--background-white);
     padding: var(--padding-small);
     border: 1px solid var(--border-color-gray);
@@ -12,4 +13,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}dsdasd
+}

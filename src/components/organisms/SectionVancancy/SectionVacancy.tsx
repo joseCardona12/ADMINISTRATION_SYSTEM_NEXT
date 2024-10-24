@@ -12,10 +12,11 @@ import { IsVacancy } from "@/utils";
 
 interface ISectionVacancyProps{
     title:string,
-    data: IVacancy[]  | ICompany[]
+    data: IVacancy[]  | ICompany[],
+    loading:boolean
 }
 
-export default function SectionVacancy({title,data}: ISectionVacancyProps):React.ReactNode{
+export default function SectionVacancy({title,data,loading}: ISectionVacancyProps):React.ReactNode{
 
     const initialVacancy: IVacancy = {
         title: "",
@@ -62,85 +63,85 @@ export default function SectionVacancy({title,data}: ISectionVacancyProps):React
             activeRol === "vacancies"
                 ?
                 <Modal title="Add vancancy" setIsOpen={setIsOpen}>
-                <Input
-                label="Title"
-                name="title"
-                onChange={(e)=>handleChange(e)}
-                type="text"
-                value={vacancy.title}
-                />
-                <TextArea
-                label="Description"
-                name="description"
-                onChange={(e)=>handleChange(e)}
-                value={vacancy.description}
-                />
-                <Select
-                label="State"
-                name="state"
-                options={["OPEN", "CLOSED"]}
-                valueDefault="Select a state"
-                value={valueSelectState}
-                setValue={setValueSelectState}
-                />
-                <Select
-                label="Company"
-                name="company"
-                options={["TechCorp", "Riwi"]}
-                valueDefault="Select a Company"
-                value={valueSelectCompany}
-                setValue={setValueSelectCompany}
-                />
-                <Button
-                icon={<IconsPlus />}
-                text="Add"
-                backgroundColor="var(--color-purple-vacancy-normal)"
-                borderRadius="var(--border-radius-small)"
-                color="var(--color-white)"
-                padding="var(--padding-small) var(--padding-medium)"
-                onClick={handleClickCreate}
+                    <Input
+                    label="Title"
+                    name="title"
+                    onChange={(e)=>handleChange(e)}
+                    type="text"
+                    value={vacancy.title}
+                    />
+                    <TextArea
+                    label="Description"
+                    name="description"
+                    onChange={(e)=>handleChange(e)}
+                    value={vacancy.description}
+                    />
+                    <Select
+                    label="State"
+                    name="state"
+                    options={["OPEN", "CLOSED"]}
+                    valueDefault="Select a state"
+                    value={valueSelectState}
+                    setValue={setValueSelectState}
+                    />
+                    <Select
+                    label="Company"
+                    name="company"
+                    options={["TechCorp", "Riwi"]}
+                    valueDefault="Select a Company"
+                    value={valueSelectCompany}
+                    setValue={setValueSelectCompany}
+                    />
+                    <Button
+                    icon={<IconsPlus />}
+                    text="Add"
+                    backgroundColor="var(--color-purple-vacancy-normal)"
+                    borderRadius="var(--border-radius-small)"
+                    color="var(--color-white)"
+                    padding="var(--padding-small) var(--padding-medium)"
+                    onClick={handleClickCreate}
 
-                />
+                    />
                 </Modal>
                 : 
                 <Modal title="Add Company" setIsOpen={setIsOpen}>
-                <Input
-                label="Name"
-                name="name"
-                onChange={(e)=>handleChange(e)}
-                type="text"
-                value={company.name}
-                />
-                <Input
-                label="Location"
-                name="location"
-                onChange={(e)=>handleChange(e)}
-                type="text"
-                value={company.location}
-                />
-                <Input
-                label="Contact"
-                name="contact"
-                onChange={(e)=>handleChange(e)}
-                type="text"
-                value={company.contact}
-                />
-                
-                <Button
-                icon={""}
-                text="Add"
-                backgroundColor="var(--color-pink-company-normal)"
-                borderRadius="var(--border-radius-small)"
-                color="var(--color-white)"
-                padding="var(--padding-small) var(--padding-medium)"
-                onClick={handleClickCreate}
+                    <Input
+                    label="Name"
+                    name="name"
+                    onChange={(e)=>handleChange(e)}
+                    type="text"
+                    value={company.name}
+                    />
+                    <Input
+                    label="Location"
+                    name="location"
+                    onChange={(e)=>handleChange(e)}
+                    type="text"
+                    value={company.location}
+                    />
+                    <Input
+                    label="Contact"
+                    name="contact"
+                    onChange={(e)=>handleChange(e)}
+                    type="text"
+                    value={company.contact}
+                    />
+                    
+                    <Button
+                    icon={""}
+                    text="Add"
+                    backgroundColor="var(--color-pink-company-normal)"
+                    borderRadius="var(--border-radius-small)"
+                    color="var(--color-white)"
+                    padding="var(--padding-small) var(--padding-medium)"
+                    onClick={handleClickCreate}
 
-                />
+                    />
                 </Modal>
             : null
         }
         <div className="content-section-vacancy">
-            {<Loading />}
+            {loading ? <Loading /> : null}
             <TitleContent
             textButton={activeRol === "vacancies" ? "Add vacancy" : "Add company"}
             title={title}
