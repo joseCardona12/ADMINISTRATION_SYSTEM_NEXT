@@ -1,35 +1,49 @@
 "use client";
-import { IVacancy } from "@/interfaces";
+import { ICompany, IVacancy } from "@/interfaces";
 import { Card, TitleContent } from "@/components/molecules";
 import { useOpenModal } from "@/global-state";
 import {Modal} from "@/components/molecules";
-import { Input, Select, TextArea, Button } from "@/components/atoms";
+import { Input, Select, TextArea, Button, Loading } from "@/components/atoms";
 import { IconsPlus } from "@/assets/icons";
 import "./sectionVacancyStyles.scss";
 import { useEffect, useState } from "react";
+import {useActiveRol} from "@/global-state";
+import { IsVacancy } from "@/utils";
 
 interface ISectionVacancyProps{
     title:string,
-    backgroundColor:string,
-    data: IVacancy[]
+    data: IVacancy[]  | ICompany[]
 }
 
-export default function SectionVacancy({title,backgroundColor,data}: ISectionVacancyProps):React.ReactNode{
+export default function SectionVacancy({title,data}: ISectionVacancyProps):React.ReactNode{
 
-    const initialModalData: IVacancy = {
+    const initialVacancy: IVacancy = {
         title: "",
         description: "",
         state: "",
         company: ""
     }
+
+    const initialCompany: ICompany = {
+        name: "",
+        location: "",
+        contact: ""
+    }
+    
     const {isOpen, setIsOpen} = useOpenModal((state)=>state);
-    const [vacancy, setVacancy] = useState<IVacancy>(initialModalData);
+    const [vacancy, setVacancy] = useState<IVacancy>(initialVacancy);
+    const [company, setCompany] = useState<ICompany>(initialCompany);
     const [valueSelectState,setValueSelectState] = useState<string>("");
     const [valueSelectCompany, setValueSelectCompany] = useState<string>("");
+    const {activeRol} = useActiveRol((state)=>state);
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void => {
         const {name, value} = e.target;
-        setVacancy((prev)=>({...prev, [name]:value}))
+        if(vacancy){
+            setVacancy((prev)=>({...prev, [name]:value}));
+            return;
+        }
+        setCompany((prev)=>({...prev, [name]:value}));
     }
     const handleClickCreate = ():void =>{
         console.log("va", valueSelectState, valueSelectCompany)
@@ -45,7 +59,9 @@ export default function SectionVacancy({title,backgroundColor,data}: ISectionVac
     }, [valueSelectState, valueSelectCompany])
     return(
         <>{isOpen ? 
-            <Modal title="Add vancancy" setIsOpen={setIsOpen}>
+            activeRol === "vacancies"
+                ?
+                <Modal title="Add vancancy" setIsOpen={setIsOpen}>
                 <Input
                 label="Title"
                 name="title"
@@ -85,25 +101,72 @@ export default function SectionVacancy({title,backgroundColor,data}: ISectionVac
                 onClick={handleClickCreate}
 
                 />
-            </Modal>
+                </Modal>
+                : 
+                <Modal title="Add Company" setIsOpen={setIsOpen}>
+                <Input
+                label="Name"
+                name="name"
+                onChange={(e)=>handleChange(e)}
+                type="text"
+                value={company.name}
+                />
+                <Input
+                label="Location"
+                name="location"
+                onChange={(e)=>handleChange(e)}
+                type="text"
+                value={company.location}
+                />
+                <Input
+                label="Contact"
+                name="contact"
+                onChange={(e)=>handleChange(e)}
+                type="text"
+                value={company.contact}
+                />
+                
+                <Button
+                icon={""}
+                text="Add"
+                backgroundColor="var(--color-pink-company-normal)"
+                borderRadius="var(--border-radius-small)"
+                color="var(--color-white)"
+                padding="var(--padding-small) var(--padding-medium)"
+                onClick={handleClickCreate}
+
+                />
+                </Modal>
             : null
         }
         <div className="content-section-vacancy">
+            {<Loading />}
             <TitleContent
+            textButton={activeRol === "vacancies" ? "Add vacancy" : "Add company"}
             title={title}
-            backgroundColor={backgroundColor}
+            backgroundColor={activeRol === "vacancies" ? "var(--color-purple-vacancy-normal)" : "var(--color-pink-company-normal)"}
             />
             <div className="vacancy-cards">
-                {data.map((vacancy:IVacancy, index:number)=>(
-                    <Card
-                    title={vacancy.title}
-                    description={vacancy.description}
-                    state={vacancy.state}
-                    company={vacancy.company}
-                    key={index}
-                    index={index}
-                    />
-                ))}
+                {data.map((item, index:number)=>
+                IsVacancy(item) 
+                ? 
+                <Card 
+                title={item.title}
+                company={item.company} 
+                description={item.description}
+                state={item.state}
+                key={index}
+                index={index}
+                />
+                :
+                <Card 
+                title={item.name}
+                location={item.location}
+                contact={item.contact}
+                key={index}
+                index={index}
+                />
+                )}
             </div>
         </div>
         </>

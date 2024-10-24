@@ -5,13 +5,17 @@ import { DeleteIcon, EditIcon } from "@/assets/icons";
 
 interface ICardProps{
     title:string,
-    description: string,
-    state:string,
-    company:string,
+    description?: string,
+    state?:string,
+    company?:string,
     index:number
+    name?: string
+    location?:string,
+    contact?: string
+    
 }
 
-export default function Card({title,description,state,company,index}:ICardProps):React.ReactElement{
+export default function Card({title,description,state,company,index, location, name,contact}:ICardProps):React.ReactElement{
 
     const handleClickUpdate = (id:number):void =>{
         console.log("update", index);
@@ -26,9 +30,19 @@ export default function Card({title,description,state,company,index}:ICardProps)
                 <h3 className="header-title">{title}</h3>
             </div>
             <div className="card-body">
+            {description 
+            ?
+            <>
                 <p className="body-description">{description}</p>
                 <p className="body-state">State: {state}</p>
                 <p className="body-company">Company: {company}</p>
+            </>
+            :
+            <>
+                <p className="body-description">{location}</p>
+                <p className="body-state">Contact: {contact}</p>
+            </>
+            }
             </div>
             <div  className="card-footer">
                 <ButtonIcon 

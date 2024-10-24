@@ -6,10 +6,11 @@ import { useOpenModal } from "@/global-state";
 
 interface ITitleContentProps{
     title:string,
+    textButton:string,
     backgroundColor: string,
 }
 
-export default function TitleContent({title,backgroundColor}:ITitleContentProps):React.ReactNode{
+export default function TitleContent({title,textButton, backgroundColor}:ITitleContentProps):React.ReactNode{
 
     const {isOpen,setIsOpen} = useOpenModal((state)=>state);
 
@@ -21,7 +22,7 @@ export default function TitleContent({title,backgroundColor}:ITitleContentProps)
             <h2>{title}</h2>
             <Button
             icon={<IconsPlus />}
-            text={"Add vacancy"}
+            text={textButton}
             backgroundColor={backgroundColor}
             borderRadius="var(--border-radius-large)"
             color="var(--color-white)"

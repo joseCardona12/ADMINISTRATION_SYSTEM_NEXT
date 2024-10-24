@@ -11,7 +11,7 @@
         borderRadius?:string,
         onClick?: ()=>void,
         text:string,
-        icon:React.ReactElement,
+        icon:React.ReactElement | string,
         state?: boolean
     }
 

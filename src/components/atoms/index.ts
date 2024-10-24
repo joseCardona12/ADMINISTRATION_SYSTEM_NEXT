@@ -5,6 +5,7 @@ import InputSearch from "./InputSearch/InputSearch";
 import Input from "./Input/Input";
 import TextArea from "./TextArea/TextArea";
 import Select from "./Select/Select";
+import Loading from "./Loading/Loading";
 
 export {
     Button,
@@ -13,5 +14,6 @@ export {
     ButtonArrow,
     Input,
     TextArea,
-    Select
+    Select,
+    Loading
 }

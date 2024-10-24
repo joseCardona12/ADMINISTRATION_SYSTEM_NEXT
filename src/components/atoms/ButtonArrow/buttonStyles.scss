@@ -1,6 +1,6 @@
 .icon{
     padding: var(--padding-small);
-    background-color: var(--border-color-gray);
+    background-color: var(--background-gray-light-inactive);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,5 +10,5 @@
 }
 
 .icon:hover{
-    background-color: var(--color-gray-light);
+    background-color: var(--background-color-hover);
 }

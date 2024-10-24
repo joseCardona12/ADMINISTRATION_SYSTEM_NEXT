@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+
 :root {
 
   /* Background colors */
@@ -22,7 +24,7 @@
   --color-purple-vacancy-hover: rgb(147, 51, 234);
 
   /*Companies*/
-  --color-pink-company-normal: rgb(249, 115, 22);
+  --color-pink-company-normal: rgb(236, 72, 153);
   --color-pink-company-hover: rgb(219, 39, 119);
 
   /*Delete bottons */
@@ -56,6 +58,9 @@
 
   /* Box shadow*/
   --box-shadown-normal: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+  /*Fonts */
+  --font-main: "Space Grotesk", sans-serif;
 }
 
 html{
@@ -84,4 +89,5 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: var(--font-main);
 }
