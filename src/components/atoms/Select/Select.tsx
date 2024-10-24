@@ -8,12 +8,13 @@ interface ISelectProps{
     name:string,
     options: string[],
     valueDefault?:string,
+    value?:string
+    setValue: (value:string)=>void
 }
 
-export default function Select({label, name, options, valueDefault}:ISelectProps):React.ReactElement{
+export default function Select({label, name, options, valueDefault, value, setValue}:ISelectProps):React.ReactElement{
     
     const [openOptions, setOpenOptions] = useState<boolean>(false);
-    const [value,setValue] = useState<string>("");
     const handleClickOpen = ():void =>{
         setOpenOptions(!openOptions);
     }

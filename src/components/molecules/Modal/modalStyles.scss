@@ -10,7 +10,7 @@
     align-items: center;
     
     .modal{
-        width: 40%;
+        width: 30%;
         padding: var(--padding-large);
         border-radius: var(--border-radius-small);
         background-color: var(--background-white);
@@ -21,6 +21,17 @@
         .modal-title{
             display: flex;
             justify-content: space-between;
+
+            .title-close{
+                cursor: pointer;
+                padding: var(--padding-small);
+                border-radius: var(--border-radius-small);
+
+                &:hover{
+                    background-color: rgb(255, 88, 88);
+                    color: var(--background-white);
+                }
+            }
         }
 
         .modal-inputs{

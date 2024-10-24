@@ -4,16 +4,21 @@ import "./modalStyles.scss";
 
 interface IModalProps{
     title:string,
-    children?:React.ReactNode
+    children?:React.ReactNode,
+    setIsOpen:(isOpen:boolean)=>void
 }
 
-export default function Modal({title,children}:IModalProps):React.ReactNode{
+export default function Modal({title,children,setIsOpen}:IModalProps):React.ReactNode{
+
+    const handleCloseModal = ():void =>{
+        setIsOpen(false);
+    }
     return(
         <div className="content-modal">
             <div className="modal">
                 <div className="modal-title">
                     <h3 className="title">{title}</h3>
-                    <div className="title-close">
+                    <div className="title-close" onClick={handleCloseModal}>
                         X
                     </div>
                 </div>

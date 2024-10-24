@@ -1,4 +1,4 @@
-import type {IVacancy} from "./cardInterface";
+import type {IVacancy} from "./vacancyInterface";
 export {
     IVacancy
 }
