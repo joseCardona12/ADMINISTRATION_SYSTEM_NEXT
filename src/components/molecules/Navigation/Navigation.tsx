@@ -3,18 +3,23 @@ import { IconsPlus, SuitcaseIcon, BuildingIcon } from "@/assets/icons";
 import { Button } from "@/components/atoms";
 import "./navigationStyles.scss";
 import { useState } from "react";
+import { useActiveRol } from "@/global-state";
 
 export default function Navigation():React.ReactElement{
 
     const [state, setState] = useState<boolean>(false);
+    const [activeRole,setActiveRol] = useState<string>("");
     const handleClickVacancies = ():void =>{
-        console.log("Vancancies")
+        console.log("Vancancies");
+        setActiveRol("vacancies");
     }
 
     const handleClickCompanies = ():void =>{
-        console.log("Companies")
-        setState(!state)
+        console.log("Companies");
+        setActiveRol("companies");
     }
+
+    
     return(
         <div className="content-navigation">
             <div className="navigation-left">

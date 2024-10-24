@@ -101,6 +101,7 @@ export default function SectionVacancy({title,backgroundColor,data}: ISectionVac
                     state={vacancy.state}
                     company={vacancy.company}
                     key={index}
+                    index={index}
                     />
                 ))}
             </div>
