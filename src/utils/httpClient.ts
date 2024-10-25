@@ -21,7 +21,7 @@ export default class HttpClient{
 
     async post<T>(url:string, vancancy: Partial<IVacancy>):Promise<T>{
         const headers: {[key:string]:string} = await this.getHeader();
-        const response = await fetch(`${this.baseUrl}${url}`, {
+        const response = await fetch(`${url}`, {
             headers,
             method: "POST",
             body: JSON.stringify(vancancy),

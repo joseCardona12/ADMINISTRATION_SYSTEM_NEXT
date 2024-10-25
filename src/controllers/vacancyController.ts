@@ -17,8 +17,7 @@ class VacancyController{
     }
 
     async createVacancy(vacancy:Partial<IVacancy>):Promise<IVacancy | {message:string}>{
-        console.log("dasdasd",vacancy)
-        const vacancies = await this.vacancyService.create(vacancy);
+        const vacancies = await this.vacancyService.create("/api/vacancies",vacancy);
         return vacancies;
     }
 }

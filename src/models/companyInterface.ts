@@ -20,5 +20,5 @@ export interface ICompany{
     name:string,
     location:string,
     contact:string,
-    vacants: Partial<IVacancy[]>
+    vacants?: Partial<IVacancy[]>
 }

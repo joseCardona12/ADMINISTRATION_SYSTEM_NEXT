@@ -1,5 +1,5 @@
 "use client";
-import { ICompany, IVacancy } from "@/models";
+import { ICompany, IVacancy, IVacancyCreate } from "@/models";
 import { Card, TitleContent, InputAlert } from "@/components/molecules";
 import { useOpenModal } from "@/global-state";
 import {Modal} from "@/components/molecules";
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import {useActiveRol} from "@/global-state";
 import { IsVacancy, verifyData } from "@/utils";
 import { vacancyController } from "@/controllers";
+import { useRouter } from "next/navigation";
 import uniqueString from "unique-string";
 
 interface ISectionVacancyProps{
@@ -41,6 +42,7 @@ export default function SectionVacancy({title,data,loading,setLoading}: ISection
         contact: ""
     }
     
+    const router = useRouter();
     const {isOpen, setIsOpen} = useOpenModal((state)=>state);
     const [vacancy, setVacancy] = useState<Partial<IVacancy>>(initialVacancy);
     const [company, setCompany] = useState<Partial<ICompany>>(initialCompany);
@@ -65,14 +67,26 @@ export default function SectionVacancy({title,data,loading,setLoading}: ISection
             }
         ));
     }
-    const handleClickCreateVacancy = async():Promise<void> =>{
+    const handleClickCreateVacancy = async():Promise<void> =>{ // Create vacancy 
         const dataVerify = verifyData(vacancy.title, vacancy.description,vacancy.status);
         if(!dataVerify){
             InputAlert("Please enter all the fields", "error");
             return;
         }
-        console.log("add vacancy");
-        const createdVacancy = await vacancyController.createVacancy(vacancy);
+        const newCreateVacancy:IVacancyCreate = {
+            title: vacancy.title!,
+            description: vacancy.description!,
+            status: vacancy.status!,
+            companyId: "152b99bd-f1cf-4fb8-a55b-7976352fa7d1"
+        }
+        const createdVacancy = await vacancyController.createVacancy(newCreateVacancy);
+        if("message" in createdVacancy){
+            InputAlert(createdVacancy.message, "error");
+            return;
+        }
+        InputAlert("Vacancy created successfully", "success");
+        router.refresh();
+        
     }
     const handleClickCreateCompany = async():Promise<void> =>{
         const dataVerify = verifyData(company.location, company.name, company.contact);
@@ -82,10 +96,7 @@ export default function SectionVacancy({title,data,loading,setLoading}: ISection
         }
         console.log("add company");
     }
-
-    console.log(company)
-
-    useEffect(()=>{
+    useEffect(()=>{ // Get value enter for user and change information in the state vacancy
         setVacancy({
             ...vacancy,
             status: valueSelectState,
@@ -118,7 +129,7 @@ export default function SectionVacancy({title,data,loading,setLoading}: ISection
                     <Select
                     label="State"
                     name="state"
-                    options={["OPEN", "CLOSED"]}
+                    options={["ACTIVE", "DESACTIVE"]}
                     valueDefault="Select a state"
                     value={valueSelectState}
                     setValue={setValueSelectState}

@@ -23,3 +23,9 @@ export interface IVacancyResponse{
     company?: ICompany
   }
   
+  export interface IVacancyCreate{
+    title: string
+    description: string
+    status: string,
+    companyId:string
+  }
