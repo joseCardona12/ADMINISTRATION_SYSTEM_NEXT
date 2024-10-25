@@ -1,6 +1,6 @@
 "use client";
-import { ICompany, IVacancy } from "@/interfaces";
-import { Card, TitleContent } from "@/components/molecules";
+import { ICompany, IVacancy } from "@/models";
+import { Card, TitleContent, InputAlert } from "@/components/molecules";
 import { useOpenModal } from "@/global-state";
 import {Modal} from "@/components/molecules";
 import { Input, Select, TextArea, Button, Loading } from "@/components/atoms";
@@ -8,32 +8,43 @@ import { IconsPlus } from "@/assets/icons";
 import "./sectionVacancyStyles.scss";
 import { useEffect, useState } from "react";
 import {useActiveRol} from "@/global-state";
-import { IsVacancy } from "@/utils";
+import { IsVacancy, verifyData } from "@/utils";
+import { vacancyController } from "@/controllers";
+import uniqueString from "unique-string";
 
 interface ISectionVacancyProps{
     title:string,
     data: IVacancy[]  | ICompany[],
-    loading:boolean
+    loading:boolean,
+    setLoading: (loading:boolean) => void
 }
 
-export default function SectionVacancy({title,data,loading}: ISectionVacancyProps):React.ReactNode{
+export default function SectionVacancy({title,data,loading,setLoading}: ISectionVacancyProps):React.ReactNode{
 
-    const initialVacancy: IVacancy = {
-        title: "",
+    const initialVacancy: Partial<IVacancy> = {
+        id: 0,
+        title:"",
         description: "",
-        state: "",
-        company: ""
+        status: "",
+        company: {
+            id: "",
+            name: "",
+            location: "",
+            contact: ""
+        }
     }
 
-    const initialCompany: ICompany = {
+    const initialCompany: Partial<ICompany> = {
+        id: "",
         name: "",
         location: "",
         contact: ""
     }
     
     const {isOpen, setIsOpen} = useOpenModal((state)=>state);
-    const [vacancy, setVacancy] = useState<IVacancy>(initialVacancy);
-    const [company, setCompany] = useState<ICompany>(initialCompany);
+    const [vacancy, setVacancy] = useState<Partial<IVacancy>>(initialVacancy);
+    const [company, setCompany] = useState<Partial<ICompany>>(initialCompany);
+
     const [valueSelectState,setValueSelectState] = useState<string>("");
     const [valueSelectCompany, setValueSelectCompany] = useState<string>("");
     const {activeRol} = useActiveRol((state)=>state);
@@ -41,21 +52,49 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
     const handleChange = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void => {
         const {name, value} = e.target;
         if(vacancy){
-            setVacancy((prev)=>({...prev, [name]:value}));
+            setVacancy((prev)=>(
+                {...prev, 
+                    id: parseInt(uniqueString()), 
+                    [name]:value
+                }));
+        }
+        setCompany((prev)=>(
+            {...prev,
+                id: uniqueString(), 
+                [name]:value
+            }
+        ));
+    }
+    const handleClickCreateVacancy = async():Promise<void> =>{
+        const dataVerify = verifyData(vacancy.title, vacancy.description,vacancy.status);
+        if(!dataVerify){
+            InputAlert("Please enter all the fields", "error");
             return;
         }
-        setCompany((prev)=>({...prev, [name]:value}));
+        console.log("add vacancy");
+        const createdVacancy = await vacancyController.createVacancy(vacancy);
     }
-    const handleClickCreate = ():void =>{
-        console.log("va", valueSelectState, valueSelectCompany)
-        console.log(vacancy);  
+    const handleClickCreateCompany = async():Promise<void> =>{
+        const dataVerify = verifyData(company.location, company.name, company.contact);
+        if(!dataVerify){
+            InputAlert("Please enter all the fields", "error");
+            return;
+        }
+        console.log("add company");
     }
+
+    console.log(company)
 
     useEffect(()=>{
         setVacancy({
             ...vacancy,
-            state: valueSelectState,
-            company: valueSelectCompany
+            status: valueSelectState,
+            company: {
+                id: (data.length + 1).toString(),
+                name: valueSelectCompany,
+                location: "Location",
+                contact: "Contact"
+            }
         });
     }, [valueSelectState, valueSelectCompany])
     return(
@@ -68,13 +107,13 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     name="title"
                     onChange={(e)=>handleChange(e)}
                     type="text"
-                    value={vacancy.title}
+                    value={vacancy.title!}
                     />
                     <TextArea
                     label="Description"
                     name="description"
                     onChange={(e)=>handleChange(e)}
-                    value={vacancy.description}
+                    value={vacancy.description!}
                     />
                     <Select
                     label="State"
@@ -99,8 +138,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     borderRadius="var(--border-radius-small)"
                     color="var(--color-white)"
                     padding="var(--padding-small) var(--padding-medium)"
-                    onClick={handleClickCreate}
-
+                    onClick={handleClickCreateVacancy}
                     />
                 </Modal>
                 : 
@@ -110,7 +148,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     name="name"
                     onChange={(e)=>handleChange(e)}
                     type="text"
-                    value={company.name}
+                    value={company.name!}
                     borderFocus="var(--color-pink-company-normal)"
                     />
                     <Input
@@ -118,7 +156,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     name="location"
                     onChange={(e)=>handleChange(e)}
                     type="text"
-                    value={company.location}
+                    value={company.location!}
                     borderFocus="var(--color-pink-company-normal)"
                     />
                     <Input
@@ -126,7 +164,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     name="contact"
                     onChange={(e)=>handleChange(e)}
                     type="text"
-                    value={company.contact}
+                    value={company.contact!}
                     borderFocus="var(--color-pink-company-normal)"
                     />
                     
@@ -137,8 +175,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     borderRadius="var(--border-radius-small)"
                     color="var(--color-white)"
                     padding="var(--padding-small) var(--padding-medium)"
-                    onClick={handleClickCreate}
-
+                    onClick={handleClickCreateCompany}
                     />
                 </Modal>
             : null
@@ -156,9 +193,9 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                 ? 
                 <Card 
                 title={item.title}
-                company={item.company} 
+                company={item.company?.name} 
                 description={item.description}
-                state={item.state}
+                state={item.status}
                 key={index}
                 index={index}
                 />

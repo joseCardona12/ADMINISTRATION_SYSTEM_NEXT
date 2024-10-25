@@ -3,7 +3,8 @@
 import "./paginationStyles.scss";
 import { ArrowBackIcon, ArrowRightIcon } from "@/assets/icons";
 import { ButtonArrow } from "@/components/atoms";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Cookie from "js-cookie";
 
 interface IPaginationProps{
     indexStart: number,
@@ -16,6 +17,7 @@ export default function Pagination({indexStart, indexFinal}: IPaginationProps):R
     const handleClickBack = ():void =>{
         if(currentPage > indexStart){
             setCurrentPage(currentPage - 1);
+            
         }
     }
 
@@ -25,6 +27,10 @@ export default function Pagination({indexStart, indexFinal}: IPaginationProps):R
             setCurrentPage(currentPage + 1);
         }
     }
+
+    useEffect(() => {
+        Cookie.set("PAGE_NUMBER", currentPage.toString());
+    }, [currentPage]); 
     return(
         <div className="content-pagination">
             <ButtonArrow

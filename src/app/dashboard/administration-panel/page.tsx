@@ -1,23 +1,20 @@
 import { AdminstrationPanel } from "@/components/layouts";
 import { Header,Footer } from "@/components/organisms";
 import { Vacancy } from "@/components/templates";
-import { ICompany, IVacancy } from "@/interfaces";
+import { companyController, vacancyController } from "@/controllers";
+import { ICompany, IVacancy } from "@/models";
+import { cookies } from "next/headers";
 
-export default function AdministrationPanelView(){
-
-    const vacancies:IVacancy[] = [
-        {title:"Desarrollador Frontend", description:"Se busca desarrollador Frontend con experiencia en React", state:"OPEN", company:"TechCorp"},
-        {title:"Desarrollador Backend", description:"Se busca desarrollador Backend con experiencia en Node", state:"OPEN", company:"TechCorp"},
-        {title:"Desarrollador Mobile", description:"Se busca desarrollador Mobile con experiencia en React Native", state:"OPEN", company:"TechCorp"},
-        {title:"Desarrollador Fullstack", description:"Se busca desarrollador Fullstack con experiencia en React y Node", state:"OPEN", company:"TechCorp"},
-        {title:"Desarrollador Mobile", description:"Se busca desarrollador Mobile con experiencia en React Native", state:"OPEN", company:"TechCorp"},
-        {title:"Desarrollador Fullstack", description:"Se busca desarrollador Fullstack con experiencia en React y Node", state:"OPEN", company:"TechCorp"},
-    ]
-    const companies: ICompany[] = [
-        {name:"TechCorp", location:"Barcelona", contact:"contact@techcorp.com"},
-        {name:"Riwi", location:"Madrid", contact:"contact@riwi.com"},
-        {name:"TechCorp", location:"Barcelona", contact:"contact@techcorp.com"},
-    ]
+export default async function AdministrationPanelView(){
+    
+    const cookieManager = await cookies();
+    const pageNumber = cookieManager.get("PAGE_NUMBER")?.value || "1";
+    const vacancies = await vacancyController.getVacancies(parseInt(pageNumber),6);
+    const companies = await companyController.getCompanies(parseInt(pageNumber),6);
+    if("message" in vacancies){
+        return <div>{vacancies.message}</div>
+    }
+    console.log("dasdas",cookieManager.get("PAGE_NUMBER")?.value);
     return(
         <AdminstrationPanel
         header={<Header />}

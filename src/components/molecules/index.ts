@@ -4,6 +4,7 @@ import Navigation from "./Navigation/Navigation";
 import Search from "./Search/Search";
 import Pagination from "./Pagination/Pagination";
 import Modal from "./Modal/Modal";
+import InputAlert from "./Alert/Alert";
 
 export {
     Card,
@@ -11,5 +12,6 @@ export {
     Navigation,
     Search,
     Pagination,
-    Modal
+    Modal,
+    InputAlert,
 }
