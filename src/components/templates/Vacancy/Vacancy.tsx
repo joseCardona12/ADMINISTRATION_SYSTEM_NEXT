@@ -11,7 +11,7 @@ interface IVacancyProps{
 }
 export default function Vacancy({title,vacancies,companies}: IVacancyProps):React.ReactNode{
     const {activeRol} = useActiveRol((state) =>state);
-    const [loading,setLoading] = useState<boolean>(true);
+    const [loading,setLoading] = useState<boolean>(false);
     return(
         <SectionVacancy 
         title={activeRol === "vacancies" ? `${title}`: "Companies"}
