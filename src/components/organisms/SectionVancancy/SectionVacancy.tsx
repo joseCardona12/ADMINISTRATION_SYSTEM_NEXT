@@ -72,6 +72,7 @@ export default function SectionVacancy({title,data,loading,setLoading}: ISection
         if(!dataVerify){
             InputAlert("Please enter all the fields", "error");
             return;
+            ss
         }
         const newCreateVacancy:IVacancyCreate = {
             title: vacancy.title!,
