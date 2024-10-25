@@ -1,6 +1,6 @@
-## PROJECT ADMINISTRATION PANEL
+## Proyecto Administation Panel
 
-## DEPENDENCIAS USADAS
+## Dependencias usudas
  - __Zustand:__ Dependencia que permite manejar los estado globales del aplicativo.
  - __Sass:__ Preprocesdor de css para manejar la eficiencia, fluidez e integración.
 
