@@ -1,5 +1,13 @@
+"use client";
+import styled from "styled-components";
 import "./textAreaStyles.scss";
 
+
+const StyledTextArea = styled.textarea
+`
+    border:1px solid red;
+
+`;
 interface ITextAreaProps{
     label:string,
     name:string,
@@ -11,8 +19,8 @@ export default function TextArea({label,name,value,onChange}:ITextAreaProps):Rea
     return(
         <div className="content-textarea">
             <label htmlFor={name}>{label}</label>
-            <textarea name={name} rows={5} onChange={onChange} value={value}>
-            </textarea>
+            <StyledTextArea name={name} rows={5} onChange={onChange} value={value}>
+            </StyledTextArea>
         </div>
     )
 }

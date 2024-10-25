@@ -111,6 +111,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     onChange={(e)=>handleChange(e)}
                     type="text"
                     value={company.name}
+                    borderFocus="var(--color-pink-company-normal)"
                     />
                     <Input
                     label="Location"
@@ -118,6 +119,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     onChange={(e)=>handleChange(e)}
                     type="text"
                     value={company.location}
+                    borderFocus="var(--color-pink-company-normal)"
                     />
                     <Input
                     label="Contact"
@@ -125,6 +127,7 @@ export default function SectionVacancy({title,data,loading}: ISectionVacancyProp
                     onChange={(e)=>handleChange(e)}
                     type="text"
                     value={company.contact}
+                    borderFocus="var(--color-pink-company-normal)"
                     />
                     
                     <Button
