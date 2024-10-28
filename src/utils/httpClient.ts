@@ -28,6 +28,15 @@ export default class HttpClient{
         });
         return await this.manageError(response);
     }
+    async postBA<T>(url:string, vancancy: Partial<IVacancy>):Promise<T>{
+        const headers: {[key:string]:string} = await this.getHeader();
+        const response = await fetch(`${this.baseUrl}${url}`, {
+            headers,
+            method: "POST",
+            body: JSON.stringify(vancancy),
+        });
+        return await this.manageError(response);
+    }
 
     async getHeader():Promise<{[key:string]:string}>{
         return {
