@@ -225,3 +225,4 @@ export default function SectionVacancy({title,data,loading,setLoading}: ISection
         </>
     )
 }
+dasdad
